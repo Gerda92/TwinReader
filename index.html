@@ -21,9 +21,16 @@
 							The Happy Prince and Other Tales by Oscar Wilde
 						</span>
 						<span class="side-options">
+							<a href="#" id="js-to-twin-pages">Twin Pages</a>
 							<a href="#" id="js-to-left">Left Twin</a>
 							<a href="#" id="js-to-right">Right Twin</a>
 							<a href="#" id="js-to-align">Align</a>
+
+							<span id="twin-pages-menu">
+								<a href="#" class="twin-pages-nav" id="js-to-twin-back"><</a>
+								<span class="page-info"></span>
+								<a href="#" class="twin-pages-nav" id="js-to-twin-for">></a>
+							</span>
 						</span>
 					</h3>
 				</div>
@@ -31,7 +38,18 @@
 		</div>
 	</header>
 	<!--page-->
-	<div class="container mode" id="read-mode-left" >
+
+	<div class="container mode" id="twin-pages-mode" >
+		<div class="row">
+			<div class="large-10 columns large-offset-1">
+
+				<table id="twin-table"></table>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container mode" id="read-mode-left" style="display:none;" >
 		<div class="row">
 			<div class="large-10 columns large-offset-1">
 
@@ -79,6 +97,7 @@
 		<script src="js/alignment-module.js"></script>
 		<script src="js/jquery.animate-colors-min.js"></script>
 		<script src="js/preprocessing.js"></script>
+		<script src="js/pagination-module.js"></script>
 	</div>	
 
 

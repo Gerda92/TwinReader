@@ -15,13 +15,12 @@ modules["Parser-book"] = (function(){
 		//_context.html(_left.html());
 		//console.log(_section);
 		$(_section).find("p").each(function (i, p) {
-		    _context.append("<p>");
+		    var _new_p = $("<p></p>").appendTo(_context);
 		    $(p).find(".sentence").each(function (i, sent) {
-		    	_context.append('<span class="' + _sent_class + '" id="' + _id_prefix + '-' +
+		    	_new_p.append('<span class="' + _sent_class + '" id="' + _id_prefix + '-' +
 		    		$(sent).attr("id") + '">' +
 		    		$(sent).html() + '</span>');
 		    });
-		    _context.append("</p>");
 		})
 
 	}
@@ -111,15 +110,29 @@ modules["Parser-book"] = (function(){
 
 modules["Change-Editor-Mode"] = (function(mode, arg){
 
-	var to_mode = function(mode, sent){
+	window.mode = 0;
+
+	var to_mode = function(to_mode, sent){
 
 		$(".mode").hide();
 
-		switch (mode) {
+		switch (window.mode) {
+			case 0: break;
+			case 1: break;
+			case 2: break;
+			case 3: $("#twin-pages-menu").hide(); break;
+			default: break;
+		}
+
+		switch (to_mode) {
 			case 0: $("#read-mode-left").show(); break;
 			case 1: $("#read-mode-right").show(); break;
 			case 2: $("#table-mode").show(); break;
-			default: $("#read-mode-left").show();
+			case 3:
+				$("#twin-pages-mode").show();
+				$("#twin-pages-menu").show();
+				break;
+			default: $("#read-mode-left").show(); break;
 		}
 
 		if (sent) {
@@ -132,6 +145,8 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 				.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
 				.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
 		}
+
+		window.mode = to_mode;
 
 	}
 

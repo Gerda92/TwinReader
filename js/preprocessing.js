@@ -24,6 +24,7 @@ modules["another-mode"] = (function(){
 			case "js-to-left": window.action(0); break;
 			case "js-to-right": window.action(1); break;
 			case "js-to-align": window.action(2); break;
+			case "js-to-twin-pages": window.action(3); break;
 			default: break;
 		}
 		return false;
