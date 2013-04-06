@@ -49,6 +49,11 @@ modules["Parser-book"] = (function(){
 				self.attr("title", $("#" + tr).html());
 				addingT(self, left_or_right);
 				self.attr("data-trigger", "manual").tooltip("show");
+				//timer
+				var tootip_timer = setTimeout(function(){
+					self.tooltip("hide");
+				}, 4000);
+				//end
 				self.addClass("light-sentence");
 				self.bind("mouseleave", function(){
 					$(this).removeClass("light-sentence");
@@ -87,16 +92,11 @@ modules["Parser-book"] = (function(){
 			});
 			$(".edit-mark").on("click", function(){
 				var _id = $(this).attr("to");
-				window.action();
+
 				var _finder = $("#sent-" + _id);
-				//change background color of finder element
-				_finder.parents(".mark").find(".twins")
-					.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
-					.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
-				//end
-				var _top_value = _finder.offset().top - 200;
-				_top_value = _top_value > 0 ? _top_value:0;
-				window.scrollTo(0, _top_value);
+
+				window.action(2, _finder);
+				
 				return false;
 			});
 		}
@@ -109,13 +109,32 @@ modules["Parser-book"] = (function(){
 
 });
 
-modules["Change-Editor-Mode"] = (function(){
+modules["Change-Editor-Mode"] = (function(mode, arg){
 
+	var to_mode = function(mode, sent){
 
-	var some_action = function(){
-		$("#read-mode").toggle();
-		$("#table-mode").toggle();
+		$(".mode").hide();
+
+		switch (mode) {
+			case 0: $("#read-mode-left").show(); break;
+			case 1: $("#read-mode-right").show(); break;
+			case 2: $("#table-mode").show(); break;
+			default: $("#read-mode-left").show();
+		}
+
+		if (sent) {
+			var _top_value = sent.offset().top - 200;
+			_top_value = _top_value > 0 ? _top_value:0;
+			window.scrollTo(0, _top_value);
+
+			//change background color of finder element
+			sent.parents(".mark").find(".twins")
+				.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
+				.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
+		}
+
 	}
-	window.action = some_action;
+
+	window.action = to_mode;
 	
 });

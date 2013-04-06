@@ -16,13 +16,22 @@
 		<div class="container">
 			<div class="row">
 				<div class="large-10 columns large-offset-1">
-					<h3 class="head-text">The Happy Prince and Other Tales by Oscar Wilde</h3>
+					<h3 class="head-text" id="js-sticky-header">
+						<span class="text">
+							The Happy Prince and Other Tales by Oscar Wilde
+						</span>
+						<span class="side-options">
+							<a href="#" id="js-to-left">Left Twin</a>
+							<a href="#" id="js-to-right">Right Twin</a>
+							<a href="#" id="js-to-align">Align</a>
+						</span>
+					</h3>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!--page-->
-	<div class="container" id="read-mode-left" >
+	<div class="container mode" id="read-mode-left" >
 		<div class="row">
 			<div class="large-10 columns large-offset-1">
 
@@ -37,7 +46,7 @@
 		</div>
 	</div>
 
-	<div class="container" id="read-mode-right" style="display:none;" >
+	<div class="container mode" id="read-mode-right" style="display:none;" >
 		<div class="row">
 			<div class="large-10 columns large-offset-1">
 
@@ -52,7 +61,7 @@
 		</div>
 	</div>
 
-	<div class="container" id="table-mode" style="display:none;" >
+	<div class="container mode" id="table-mode" style="display:none;" >
 		<div class="row">
 			<div class="large-10 columns large-offset-1">
 				<table id="align-table"></table>
@@ -69,6 +78,7 @@
 		<script src="js/modules.js"></script>
 		<script src="js/alignment-module.js"></script>
 		<script src="js/jquery.animate-colors-min.js"></script>
+		<script src="js/preprocessing.js"></script>
 	</div>	
 
 
