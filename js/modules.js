@@ -30,6 +30,13 @@ modules["Parser-book"] = (function(){
 
 		sentence.bind("click", function(){
 			var self = $(this);
+			var _top_el = self.offset().top;
+			//Caculate the height
+			window.current_selected = {
+				top : _top_el,
+				id : self.attr("id")
+			}
+			//end
 			var id = left_or_right == 0 ? (/left-(.+)/g).exec(self.attr("id"))[1] :
 				id = (/right-(.+)/g).exec(self.attr("id"))[1];
 			var find = null;
@@ -79,7 +86,8 @@ modules["Parser-book"] = (function(){
 				var _html = "<div class=tooltip-control-button><a href=# to=" + tr +
 				 		        " class=change-language>Switch Language</a> <a href=# to="
 				 		        + tr +" class=edit-mark>Align</a></div>"
-				_tooltip.after(_html);
+				//_tooltip.after(_html);
+				_tooltip.parent().append(_html);
 			}
 
 			//wait
