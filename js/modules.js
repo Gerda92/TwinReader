@@ -166,9 +166,11 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 			default: $("#read-mode-left").show(); break;
 		}
 
-		if (sent && (sent instanceof jQuery && sent.length > 0)) {
+		//if (sent && (sent instanceof jQuery && sent.length > 0)) {
+		if (sent && sent.length > 0) {
 			var _top_value = sent.offset().top - 200;
 			_top_value = _top_value > 0 ? _top_value:0;
+
 			window.scrollTo(0, _top_value);
 
 			if (to_mode < 2) {
