@@ -46,7 +46,8 @@ modules["Parser-book"] = (function(){
 				//end
 				var tr = (left_or_right == 0 ? find["BookmarkId2"] : find["BookmarkId1"]);
 				self.attr("title", $("#" + tr).html());
-				addingT(self, left_or_right);
+
+				addingT(self, left_or_right, tr);
 				self.attr("data-trigger", "manual").tooltip("show");
 				//timer
 				var tootip_timer = setTimeout(function(){
@@ -65,7 +66,7 @@ modules["Parser-book"] = (function(){
 		});
 	}
 
-	var addingT = function(_object_, left_or_right){
+	var addingT = function(_object_, left_or_right, tr){
 		if(!_object_) return false;
 		_object_.on("shown", function(){
 			//trigger when tooltip start work
@@ -75,18 +76,34 @@ modules["Parser-book"] = (function(){
 				var id = left_or_right == 0 ? (/left-(.+)/g).exec(_object_.attr("id"))[1] :
 					id = (/right-(.+)/g).exec(_object_.attr("id"))[1];
 				console.log(id);
-				var _html = "<div class=tooltip-control-button><a href=# to=" + id +
+				var _html = "<div class=tooltip-control-button><a href=# to=" + tr +
 				 		        " class=change-language>Switch Language</a> <a href=# to="
-				 		        + id +" class=edit-mark>Align</a></div>"
+				 		        + tr +" class=edit-mark>Align</a></div>"
 				_tooltip.after(_html);
 			}
 
 			//wait
-			setTimeout(_bind_actions, 100);
+			setTimeout(function(){
+				_bind_actions(left_or_right);
+			}, 100);
 		});
 
-		var _bind_actions = function(){
+		var _bind_actions = function(left_or_right){
 			$(".change-language").on("click", function(){
+				var _id = $(this).attr("to");
+
+				var _finder = null;
+				if(left_or_right == 0) {
+					_finder = $("#right-" + _id);
+
+				} else {
+					_finder = $("#left-" + _id);
+				}
+
+				//saving the coordinates of current sentence
+				var _current_top = $(this).offset().top;
+				//end
+				window.action(1 - left_or_right, _finder);
 				return false;
 			});
 			$(".edit-mark").on("click", function(){
@@ -110,10 +127,11 @@ modules["Parser-book"] = (function(){
 
 modules["Change-Editor-Mode"] = (function(mode, arg){
 
-	window.mode = 0;
+	window.mode = 3;
 
 	var to_mode = function(to_mode, sent){
-
+		if(window.mode == to_mode)
+			return false;
 		$(".mode").hide();
 
 		switch (window.mode) {
@@ -135,15 +153,23 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 			default: $("#read-mode-left").show(); break;
 		}
 
-		if (sent) {
+		if (sent && (sent instanceof jQuery && sent.length > 0)) {
 			var _top_value = sent.offset().top - 200;
 			_top_value = _top_value > 0 ? _top_value:0;
 			window.scrollTo(0, _top_value);
 
-			//change background color of finder element
-			sent.parents(".mark").find(".twins")
-				.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
-				.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
+			if (to_mode < 2) {
+				//change background color of finder element
+				sent.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
+					.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
+			}
+
+			if (to_mode == 2) {
+				//change background color of finder element
+				sent.parents(".mark").find(".twins")
+					.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
+					.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
+			}
 		}
 
 		window.mode = to_mode;

@@ -44,7 +44,7 @@ modules["Twin-Mode"] = (function(){
 					pr = $("<p></p>").appendTo(tdr);
 		    });	
 
-		    if (tr.height() + 150 > $(window).height()) {
+		    if (tr.height() + 175 > $(window).height()) {
 
 		    	page_num++;
 
@@ -102,8 +102,21 @@ modules["Twin-Mode"] = (function(){
             '" data-mark="' + data_mark + '">' + $(sent).html() + '</span>'
     }
 
-	pre(_bindings, _context);
 
+    var calculate_height = function(){
+    	var table = $("#twin-table");
+    	var arr = table.find("tr") || [];
+    	var _max_h = 0;
+    	for(var i = 0; i < arr.length; i++){
+    		$(arr[i]).find("p").last().css("margin-bottom", 0)
+    		.parent().parent().css("overflow-y", "hidden");
+    		_max_h = Math.max(_max_h, $(arr[i]).height());
+    	}
+    	$("#twin-table tr").height(_max_h - 20);
+    }
+
+	pre(_bindings, _context);
+	calculate_height.call();
 	bind_nav.call();
 	bind_sents.call();
 
