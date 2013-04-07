@@ -3,6 +3,9 @@
 */
 modules["Parser-book"] = (function(){
 
+	//global
+
+
 	var _left = $("#rawtext .left-twin");
 	var _right = $("#rawtext .right-twin");
 	var _context_left = $("#js-context-left");
@@ -140,6 +143,8 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 	var to_mode = function(to_mode, sent){
 		if(window.mode == to_mode)
 			return false;
+		//global
+		window.namespace.scroll[window.mode] = window.scrollY;
 		$(".mode").hide();
 
 		switch (window.mode) {
@@ -178,6 +183,11 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 					.animate({ backgroundColor: "rgb(73, 202, 73)" }, 200)
 					.animate({ backgroundColor: "rgb(255, 255, 255)" }, 1200);
 			}
+		}
+		else{
+			//window.namespace;
+			if(window.namespace.scroll[to_mode])
+				window.scrollTo(0, window.namespace.scroll[to_mode]);
 		}
 
 		window.mode = to_mode;
