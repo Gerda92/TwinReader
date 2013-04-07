@@ -197,3 +197,36 @@ modules["Change-Editor-Mode"] = (function(mode, arg){
 	window.action = to_mode;
 	
 });
+
+modules["tooltip-twin"] = (function(){
+	$(document).ready(function(){
+		_reminder();
+	});
+
+	var _reminder = function(){
+		var _active = $(".twin-sent");
+		var _last = null;
+		_active.bind("click", function(){
+			//hide the tooltip that was showed
+			if(_last) _last.tooltip("hide");
+			//end
+			var _id = $(this).attr("id");
+			$(this).attr("title", " ");
+			$(this).attr("data-trigger", "manual");
+			if(/US/.test(_id)){
+				//show tooltip on right of app
+				$(this).attr("data-placement", "right");
+				$(this).tooltip("show");
+			}
+			else{
+				//show tooltip on left of app
+				$(this).attr("data-placement", "left");
+				$(this).tooltip("show");
+			}
+			_last = $(this);
+		});
+	}
+	var _show_t = function(){
+
+	}
+});

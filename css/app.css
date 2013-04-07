@@ -66,3 +66,13 @@ p{
 	margin-right : 5px;
 }
 
+
+/*
+	working with buttons
+*/
+.icon-left{
+	background: url('icons/lb.png');
+}
+.icon-right{
+	
+}
